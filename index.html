@@ -1,52 +1,124 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello LIFFAPP</title>
-  </head>
-  <body>
-	<h1>Hello LiffApp</h1>
-	<h1>はじめての LiffApp</h1>
-	<div class="button-area">
-	<button type="button" onclick="sendMessageSample()">送信！</button>
-	</div>
-	
-	<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-	<script type="text/javascript">
-		//liff init
-	    console.log(liff.getOS());
-	    console.log(liff.getLanguage());
-	    console.log(liff.getVersion());
-	    console.log(liff.isInClient());
-	    console.log(liff.getLineVersion());
-	    liff.init({
-	        liffId:"1656750689-vg7wnoed",
-	    })
-	    .then(() => {
-	        // start to use LIFF's api
-	        console.log('さくせす', liff.id);
-	    })
-	    .catch((err) => {
-	        console.log(err.code, err.message);
-	        alert('エラーが発生しました');
-	    });
-	    function sendMessageSample(){
-			liff.sendMessages([
-			  {
-			    type: 'text',
-			    text: 'Hello, World!'
-			  }
-			])
-			  .then(() => {
-			    console.log('message sent');
-			    alert('送信完了！');
-			  })
-			  .catch((err) => {
-			    console.log('error', err);
-			    alert('エラーが発生しました');
-			  });
-	    }
-    </script>
-  </body>
+    <title>Document</title>
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+</head>
+<body>
+    <div id="app" style="padding: 30px;">
+        <div>
+        診断名：<input id="dgname" placeholder="診断名">
+        <button id='post'>送信</button>
+        </div>
+        <div id = "output" style="height: 300px; overflow: auto"></div>
+    </div>
+
+
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.3.4/vconsole.min.js"></script>
+  <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+  <script>
+    window.onload = function () {
+      initVConsole();
+    }
+    // Initialize vConsole
+    function initVConsole() {
+      window.vConsole = new window.VConsole({
+        defaultPlugins: ['system', 'network', 'element', 'storage'],
+        maxLogNumber: 1000,
+        onReady: function () {
+          console.log('vConsole is ready.');
+        },
+        onClearLog: function () {
+          console.log('on clearLog');
+        }
+      });
+    }
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+     configを貼り付ける
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    let userId = "";
+
+    async function post() {
+      const collectionName = userId
+      console.log('cllecotion userId:' + collectionName);
+      const now = new Date();            //日付取得準備（必須）！！
+      const month = now.getMonth() + 1;  //月+１を足す
+      const date = now.getDate();        //日
+      const day = now.getDay();          //曜日（数値）
+      const h = now.getHours();          //時
+      const m = now.getMinutes();        //分
+      const s = now.getSeconds();       //秒
+      //日時表示文字列の作成
+      const time = month + "/" + date + " " + h + ":" + m + ":" + s;
+      const dgName = $('#dgname').val();
+      const dgDay = time
+      const res = db.collection(collectionName).doc();
+      await res.set({
+              dgname : dgName,
+              dgday: dgDay,
+              time: now
+            });
+    };
+
+    $('#post').on('click', post);
+
+    $(document).ready(async function () {
+        const liffId = "liffのIDをいれる";
+
+        // liffの初期化
+        await liff.init({ liffId: liffId });
+        // これ以降にliffを利用した処理を書いていく
+
+        // 開いている端末のos取得
+        console.log(liff.getOS());
+
+        // ログインしてなければログインを促す
+        // LINE内で開いた場合は特にログイン処理なしで大丈夫
+        if (!liff.isLoggedIn()) {
+        liff.login();
+        return;
+        }
+
+        // プロフィール情報取得
+        const profile = await liff.getProfile();
+        userId = profile.userId; //LINEのID
+        console.log("userID:" + userId);
+
+        const observer = db.collection(userId).orderBy("time", "asc").onSnapshot(snapshot => {
+        $('#output').empty();
+        console.log('on snapshot!');
+        const collectionName = userId
+        console.log('observer userId:' + userId);
+        snapshot.forEach(doc => {
+        console.log(doc.data().dgname);
+        console.log(doc.data().dgname);
+        console.log(doc.data().dgday);
+        const h = '<p> 診断名：' + doc.data().dgname + '<br>診断日：' + doc.data().dgday  + '</p>';
+        $('#output').append(h);
+        const scrollHeight = $('#output')[0].scrollHeight;
+        $('#output').scrollTop(scrollHeight);
+        });
+        });
+
+  });
+</script>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
 </html>
