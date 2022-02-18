@@ -15,7 +15,7 @@
 <body>
     <div id="app" style="padding: 30px;">
         <div>
-        診断名：<input id="dgname" placeholder="診断名">
+        メモ名：<input id="dgname" placeholder="メモ名">
         <button id='post'>送信</button>
         </div>
         <div id = "output" style="height: 300px; overflow: auto"></div>
@@ -114,7 +114,7 @@
         console.log(doc.data().dgname);
         console.log(doc.data().dgname);
         console.log(doc.data().dgday);
-        const h = '<p> 診断名：' + doc.data().dgname + '<br>診断日：' + doc.data().dgday  + '</p>';
+        const h = '<p> メモ名：' + doc.data().dgname + '<br>メモ日：' + doc.data().dgday  + '</p>';
         $('#output').append(h);
         const scrollHeight = $('#output')[0].scrollHeight;
         $('#output').scrollTop(scrollHeight);
