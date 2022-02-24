@@ -27,9 +27,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.3.4/vconsole.min.js"></script>
   <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
   <script>
-    require("dotenv").config();
-    
     window.onload = function () {
+      require("dotenv").config();
       initVConsole();
     }
 
@@ -87,7 +86,8 @@
     $('#post').on('click', post);
 
     $(document).ready(async function () {
-        const liffId = "1656904947-Ak4bbzqJ";   //"<%= process.env.REACT_APP_LIFF_ID2 %>"; //
+        require("dotenv").config();
+        const liffId = "<%= process.env.REACT_APP_LIFF_ID2 %>"; //"1656904947-Ak4bbzqJ";   //
         // liffの初期化
         await liff.init({ liffId: liffId });
         // これ以降にliffを利用した処理を書いていく
