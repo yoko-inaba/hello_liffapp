@@ -48,12 +48,12 @@
     // Your web app's Firebase configuration
     const firebaseConfig = {
 
-      apiKey: "<%= process.env.REACT_APP_FIREBASE_KEY %>",  //"AIzaSyAgRnmf5JHw_0LvlWJKdx2YcxOaa0zj1Y8", //
-      authDomain: "<%= process.env.REACT_APP_FIREBASE_DOMAIN %>",    //"mylinebot-fe1a4.firebaseapp.com", //
-      projectId: "<%= process.env.REACT_APP_FIREBASE_PROJECT_ID %>",   //"mylinebot-fe1a4",   //
-      storageBucket: "<%= process.env.REACT_APP_FIREBASE_STORAGE_BUCKET %>",   //"mylinebot-fe1a4.appspot.com",  //
-      messagingSenderId: "<%= process.env.REACT_APP_FIREBASE_SENDER_ID %>",  //"106454092146",   //
-      appId: "<%= process.env.REACT_APP_FIREBASE_APP_ID %>" //"1:106454092146:web:71f04bd7e998c0478b35eb"   //
+      apiKey: "<%= process.env.REACT_APP_FIREBASE_KEY %>",  
+      authDomain: "<%= process.env.REACT_APP_FIREBASE_DOMAIN %>",   
+      projectId: "<%= process.env.REACT_APP_FIREBASE_PROJECT_ID %>",
+      storageBucket: "<%= process.env.REACT_APP_FIREBASE_STORAGE_BUCKET %>", 
+      messagingSenderId: "<%= process.env.REACT_APP_FIREBASE_SENDER_ID %>",  
+      appId: "<%= process.env.REACT_APP_FIREBASE_APP_ID %>" 
 
     };
     // Initialize Firebase
@@ -87,7 +87,7 @@
 
     $(document).ready(async function () {
         require("dotenv").config();
-        const liffId = process.env.REACT_APP_LIFF_ID2; //"1656904947-Ak4bbzqJ";   //
+        const liffId = "1656904947-Ak4bbzqJ";   //process.env.REACT_APP_LIFF_ID2; //
         // liffの初期化
         await liff.init({ liffId: liffId });
         // これ以降にliffを利用した処理を書いていく
