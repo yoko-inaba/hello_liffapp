@@ -87,7 +87,7 @@
 
     $(document).ready(async function () {
         require("dotenv").config();
-        const liffId = "<%= process.env.REACT_APP_LIFF_ID2 %>"; //"1656904947-Ak4bbzqJ";   //
+        const liffId = process.env.REACT_APP_LIFF_ID2; //"1656904947-Ak4bbzqJ";   //
         // liffの初期化
         await liff.init({ liffId: liffId });
         // これ以降にliffを利用した処理を書いていく
