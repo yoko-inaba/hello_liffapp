@@ -86,7 +86,7 @@
     $('#post').on('click', post);
 
     $(document).ready(async function () {
-        const liffId = "<%= process.env.REACT_APP_LIFF_ID2 %>"; //"1656904947-Ak4bbzqJ";   //
+        const liffId = "1656904947-Ak4bbzqJ";   //"<%= process.env.REACT_APP_LIFF_ID2 %>"; //
         // liffの初期化
         await liff.init({ liffId: liffId });
         // これ以降にliffを利用した処理を書いていく
