@@ -84,7 +84,7 @@
     $('#post').on('click', post);
 
     $(document).ready(async function () {
-        const liffId = "1656904947-Ak4bbzqJ";   //process.env.REACT_APP_LIFF_ID2; //
+        const liffId = process.env.REACT_APP_LIFF_ID2; //"1656904947-Ak4bbzqJ";   //
         // liffの初期化
         await liff.init({ liffId: liffId });
         // これ以降にliffを利用した処理を書いていく
@@ -113,7 +113,7 @@
         console.log(doc.data().dgname);
         console.log(doc.data().dgname);
         console.log(doc.data().dgday);
-        const h = '<p> メモ名：' + doc.data().dgname + '<br>メモ日：' + doc.data().dgday  + '</p>';
+        const h = '<p> メモ名：' + doc.data().dgname + '<br>メモ日++：' + doc.data().dgday  + '</p>';
         $('#output').append(h);
         const scrollHeight = $('#output')[0].scrollHeight;
         $('#output').scrollTop(scrollHeight);
