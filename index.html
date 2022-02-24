@@ -28,8 +28,12 @@
   <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
   <script>
     window.onload = function () {
+      require("dotenv").config();
       initVConsole();
     }
+
+    
+
     // Initialize vConsole
     function initVConsole() {
       window.vConsole = new window.VConsole({
@@ -46,7 +50,7 @@
     // Your web app's Firebase configuration
     const firebaseConfig = {
 
-      apiKey: "AIzaSyAgRnmf5JHw_0LvlWJKdx2YcxOaa0zj1Y8", //process.env.REACT_APP_FIREBASE_KEY,  //
+      apiKey: process.env.REACT_APP_FIREBASE_KEY,  //"AIzaSyAgRnmf5JHw_0LvlWJKdx2YcxOaa0zj1Y8", //
       authDomain: "mylinebot-fe1a4.firebaseapp.com", //process.env.REACT_APP_FIREBASE_DOMAIN,    //
       projectId: "mylinebot-fe1a4",   //process.env.REACT_APP_FIREBASE_PROJECT_ID,   //
       storageBucket: "mylinebot-fe1a4.appspot.com",  //process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,   //
@@ -84,7 +88,7 @@
     $('#post').on('click', post);
 
     $(document).ready(async function () {
-        const liffId = process.env.REACT_APP_LIFF_ID2; //"1656904947-Ak4bbzqJ";   //
+        const liffId = "1656904947-Ak4bbzqJ";   //process.env.REACT_APP_LIFF_ID2; //
         // liffの初期化
         await liff.init({ liffId: liffId });
         // これ以降にliffを利用した処理を書いていく
@@ -113,7 +117,7 @@
         console.log(doc.data().dgname);
         console.log(doc.data().dgname);
         console.log(doc.data().dgday);
-        const h = '<p> メモ名：' + doc.data().dgname + '<br>メモ日++：' + doc.data().dgday  + '</p>';
+        const h = '<p> メモ名++：' + doc.data().dgname + '<br>メモ日：' + doc.data().dgday  + '</p>';
         $('#output').append(h);
         const scrollHeight = $('#output')[0].scrollHeight;
         $('#output').scrollTop(scrollHeight);
